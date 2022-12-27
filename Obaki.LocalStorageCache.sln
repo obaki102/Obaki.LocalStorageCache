@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33122.133
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Obaki.LocalSorageCache", "src\Obaki.LocalSorageCache\Obaki.LocalSorageCache.csproj", "{E3FAB0BF-205D-4413-9945-50A36745F09E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Obaki.LocalStorageCache", "src\Obaki.LocalStorageCache\Obaki.LocalStorageCache.csproj", "{E3FAB0BF-205D-4413-9945-50A36745F09E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Obaki.LocalSorageCache.Test", "Obaki.LocalSorageCache.Test\Obaki.LocalSorageCache.Test.csproj", "{046DA0A2-D5A8-4A7E-89F4-165C7D88291F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Obaki.LocalStorageCache.Test", "Obaki.LocalStorageCache.Test\Obaki.LocalStorageCache.Test.csproj", "{046DA0A2-D5A8-4A7E-89F4-165C7D88291F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
