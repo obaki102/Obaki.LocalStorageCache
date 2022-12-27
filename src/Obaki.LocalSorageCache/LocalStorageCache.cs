@@ -2,49 +2,54 @@
 
 namespace Obaki.LocalSorageCache
 {
-    public class LocalStorageCache<T> : ILocalStorageCache<T> where T : class
+    public class LocalStorageCache :ILocalStorageCache
     {
+        
         private readonly ILocalStorageService _localStorageService;
+        private int _cacheExpirationHrs;
+
         public LocalStorageCache(ILocalStorageService localStorageService)
         {
             _localStorageService = localStorageService;
         }
-        private T? Data { get; set; }
         public LocalStorageCacheOptions? Options { get; set; }
-        private bool perfromRefreshData { get; set; } = false;
-        public async Task<T> GetCacheData()
+
+        public int CacheExpirationHrs
         {
-            if (Options is null)
-            {
-                throw new ArgumentNullException($"{nameof(Options)} is null.");
-            }
-
-            if (!perfromRefreshData)
-            {
-                var cacheData = await _localStorageService.GetItemAsync<CacheData<T>>(Options.DataKey).ConfigureAwait(false);
-                if (cacheData is not null)
-                {
-                    Data = cacheData.Content;
-                }
-            }
-
-            if (Data is not null)
-            {
-                return Data;
-            }
-
-            throw new ArgumentNullException($"{nameof(ILocalStorageService)} is null.");
+            get => _cacheExpirationHrs;
+            set => _cacheExpirationHrs = value;
+                
         }
 
-        //todo: Check how can data refresh  happen inside LocalStorageCache
-        public async Task<bool> IsCacheNeedsDataRefresh()
+        public async Task SetData<T>(string key, T data)
         {
-            if (Options is null)
+            if(string.IsNullOrEmpty(key))
             {
-                throw new ArgumentNullException($"{nameof(Options)} is null.");
+                throw new ArgumentNullException(nameof(key), "Key is empty.");
             }
 
-            var cacheData = await _localStorageService.GetItemAsync<CacheData<T>>(Options.DataKey).ConfigureAwait(false);
+            if (data is null)
+            {
+                throw new ArgumentNullException(nameof(T), "Cache data is empty.");
+            }
+
+            var cacheData = new CacheData<T>
+            {
+                Cache = data,
+            };
+
+            await _localStorageService.SetItemAsync(key, cacheData).ConfigureAwait(false);
+        }
+
+        public async Task<(bool isCacheExist, T? cacheData)> TryGetCacheValue<T>(string key)
+        {
+            if (string.IsNullOrEmpty(key))
+            {
+                throw new ArgumentNullException(nameof(key), "Key is empty.");
+            }
+
+            var cacheData = await _localStorageService.GetItemAsync<CacheData<T>>(key).ConfigureAwait(false);
+
             double totalHrsSinceCacheCreated = 0;
 
             if (cacheData is not null)
@@ -52,40 +57,13 @@ namespace Obaki.LocalSorageCache
                 totalHrsSinceCacheCreated = DateTime.Now.Subtract(cacheData.Created).TotalHours;
             }
 
-            if (cacheData is null || totalHrsSinceCacheCreated > Options.NumberOfHrsToRefreshCache)
+            if (cacheData is null || totalHrsSinceCacheCreated > CacheExpirationHrs)
             {
-                perfromRefreshData = true;
-                return true;
+                return (false, default);
             }
 
-            return false;
+            return (true, cacheData.Cache);
         }
-
-        public async Task ClearCache()
-        {
-            if (Options is null)
-            {
-                throw new ArgumentNullException($"{nameof(Options)} is null.");
-            }
-
-            await _localStorageService.RemoveItemAsync(Options.DataKey).ConfigureAwait(false);
-        }
-
-        public async Task SetData(T data)
-        {
-            if (Options is null)
-            {
-                throw new ArgumentNullException($"{nameof(Options)} is null.");
-            }
-
-            Data = data;
-            var updatedCacheData = new CacheData<T>
-            {
-                Content = data,
-            };
-            await _localStorageService.SetItemAsync<CacheData<T>>(Options.DataKey, updatedCacheData).ConfigureAwait(false);
-        }
-
-
+      
     }
 }

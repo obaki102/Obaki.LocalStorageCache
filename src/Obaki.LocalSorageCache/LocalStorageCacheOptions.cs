@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Extensions.Options;
 
 namespace Obaki.LocalSorageCache
 {
-    public class LocalStorageCacheOptions
+    public class LocalStorageCacheOptions : IOptions<LocalStorageCacheOptions>
     {
+        //Not implemented as of yet
         public required string DataKey { get; set; } = string.Empty;
         public int NumberOfHrsToRefreshCache { get; set; } = 1;
+        public LocalStorageCacheOptions Value =>  this;
     }
 }

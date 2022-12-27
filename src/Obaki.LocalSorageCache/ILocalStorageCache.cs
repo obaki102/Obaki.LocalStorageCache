@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿
 using System.Threading.Tasks;
 
 namespace Obaki.LocalSorageCache
 {
-    public interface ILocalStorageCache<T>
+    public interface ILocalStorageCache
     {
-        Task<T> GetCacheData();
-        LocalStorageCacheOptions? Options { get; set; }
-        Task<bool> IsCacheNeedsDataRefresh();
-        Task SetData(T data);
-        Task ClearCache();
+        Task<(bool isCacheExist, T? cacheData)> TryGetCacheValue<T>(string key);
+        Task SetData<T>(string key, T Data);
+        int CacheExpirationHrs { get; set; }
     }
 }
