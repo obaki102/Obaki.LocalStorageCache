@@ -18,7 +18,7 @@ An alternative is to install via the .NET CLI with the following command:
 dotnet add package Obaki.LocalStorageCache
 ```
 
-For more information you can check the [nuget package](https://www.nuget.org/packages/Obaki.LocalSorageCache).
+For more information you can check the [nuget package](https://www.nuget.org/packages/Obaki.LocalStorageCache).
 
 ## Setup
 Register the needed services in your Program.cs file as **Scope**
