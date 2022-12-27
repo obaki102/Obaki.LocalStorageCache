@@ -8,7 +8,9 @@
         {
             _createDateTime = DateTime.Now;
         }
+
         public T? Cache { get; init; }
+
         public DateTime Created { get => _createDateTime; set => _createDateTime = value; }
     }
 }

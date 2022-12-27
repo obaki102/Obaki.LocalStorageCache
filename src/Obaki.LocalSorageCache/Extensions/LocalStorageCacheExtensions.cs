@@ -19,7 +19,6 @@ namespace Obaki.LocalSorageCache.Extensions
             await localCache.SetData(key, newCacheData);
 
             return newCacheData;
-
         }
 
         public static ILocalStorageCache SetExpirationHrs(this ILocalStorageCache localCache, int expirationHrs)

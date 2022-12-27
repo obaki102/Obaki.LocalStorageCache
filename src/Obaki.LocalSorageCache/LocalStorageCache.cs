@@ -64,6 +64,5 @@ namespace Obaki.LocalSorageCache
 
             return (true, cacheData.Cache);
         }
-      
     }
 }

@@ -16,6 +16,7 @@ namespace Obaki.LocalSorageCache.Extensions
             services.TryAddScoped<ILocalStorageCache,LocalStorageCache>();
             return services;
         }
+
         public static IServiceCollection AddLocalStorageCacheAsSingleton(this IServiceCollection services)
         {
             if (services == null)
