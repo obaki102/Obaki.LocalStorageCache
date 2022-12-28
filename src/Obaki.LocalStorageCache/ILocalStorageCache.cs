@@ -5,13 +5,13 @@ namespace Obaki.LocalStorageCache
 {
     public interface ILocalStorageCache
     {
-        Task<(bool isCacheExist, T? cacheData)> TryGetCacheValue<T>(string key);
+        ValueTask<(bool isCacheExist, T? cacheData)> TryGetCacheValue<T>(string key);
 
-        Task<T> GetCacheValue<T>(string key);
+        ValueTask<T> GetCacheValue<T>(string key);
 
-        Task ClearCacheValue(string key);
+        ValueTask ClearCacheValue(string key);
 
-        Task SetCacheValue<T>(string key, T Data);
+        ValueTask SetCacheValue<T>(string key, T Data);
 
         int CacheExpirationHrs { get; set; }
     }

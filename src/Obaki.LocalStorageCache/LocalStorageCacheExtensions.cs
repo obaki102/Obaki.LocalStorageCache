@@ -1,9 +1,8 @@
-﻿
-namespace Obaki.LocalStorageCache.Extensions
+﻿namespace Obaki.LocalStorageCache
 {
     public static class LocalStorageCacheExtensions
     {
-        public static async Task<T> GetOrCreateCacheAsync<T>(this ILocalStorageCache localCache, string key,
+        public static async ValueTask<T> GetOrCreateCacheAsync<T>(this ILocalStorageCache localCache, string key,
             Func<ILocalStorageCache, Task<T>> creator)
         {
             var result = await localCache.TryGetCacheValue<T>(key);
@@ -21,14 +20,14 @@ namespace Obaki.LocalStorageCache.Extensions
             return newCacheData;
         }
 
-        public static async Task<T> GetCacheAsync<T>(this ILocalStorageCache localCache, string key)
+        public static async ValueTask<T> GetCacheAsync<T>(this ILocalStorageCache localCache, string key)
         {
             return await localCache.GetCacheValue<T>(key);
         }
 
-        public static async Task ClearCacheAsync(this ILocalStorageCache localCache, string key)
+        public static async ValueTask ClearCacheAsync(this ILocalStorageCache localCache, string key)
         {
-             await localCache.ClearCacheValue(key);
+            await localCache.ClearCacheValue(key);
         }
 
         public static ILocalStorageCache SetExpirationHrs(this ILocalStorageCache localCache, int expirationHrs)

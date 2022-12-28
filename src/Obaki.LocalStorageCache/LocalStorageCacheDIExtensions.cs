@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
-namespace Obaki.LocalStorageCache.Extensions
+namespace Obaki.LocalStorageCache
 {
     public static class LocalStorageCacheDIExtensions
     {
@@ -13,7 +13,7 @@ namespace Obaki.LocalStorageCache.Extensions
                 throw new ArgumentNullException(nameof(services));
             }
             services.AddBlazoredLocalStorage();
-            services.TryAddScoped<ILocalStorageCache,LocalStorageCache>();
+            services.TryAddScoped<ILocalStorageCache, LocalStorageCache>();
             return services;
         }
 
