@@ -41,7 +41,7 @@ public void ConfigureServices(IServiceCollection services)
 ## Usage
 ```c#
 using Obaki.LocalStorageCache;
-using Obaki.LocalStorageCache.Extensions;
+
 public class Test {
   private readonly ILocalStorageCache _localStorageCache;
   public Test(ILocalStorageCache localStorageCache) {
