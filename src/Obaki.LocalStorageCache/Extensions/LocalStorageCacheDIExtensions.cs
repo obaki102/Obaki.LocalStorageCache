@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
-namespace Obaki.LocalSorageCache.Extensions
+namespace Obaki.LocalStorageCache.Extensions
 {
     public static class LocalStorageCacheDIExtensions
     {

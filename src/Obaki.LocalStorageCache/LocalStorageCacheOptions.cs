@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
 
-namespace Obaki.LocalSorageCache
+namespace Obaki.LocalStorageCache
 {
     public class LocalStorageCacheOptions : IOptions<LocalStorageCacheOptions>
     {

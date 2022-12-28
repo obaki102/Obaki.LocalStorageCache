@@ -1,13 +1,17 @@
 ﻿
 using System.Threading.Tasks;
 
-namespace Obaki.LocalSorageCache
+namespace Obaki.LocalStorageCache
 {
     public interface ILocalStorageCache
     {
         Task<(bool isCacheExist, T? cacheData)> TryGetCacheValue<T>(string key);
 
-        Task SetData<T>(string key, T Data);
+        Task<T> GetCacheValue<T>(string key);
+
+        Task ClearCacheValue(string key);
+
+        Task SetCacheValue<T>(string key, T Data);
 
         int CacheExpirationHrs { get; set; }
     }

@@ -1,4 +1,4 @@
-﻿namespace Obaki.LocalSorageCache
+﻿namespace Obaki.LocalStorageCache
 {
     public record CacheData<T>
     {

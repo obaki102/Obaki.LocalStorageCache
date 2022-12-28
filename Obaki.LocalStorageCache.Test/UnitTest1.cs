@@ -1,4 +1,4 @@
-namespace Obaki.LocalSorageCache.Test
+namespace Obaki.LocalStorageCache.Test
 {
     public class UnitTest1
     {
