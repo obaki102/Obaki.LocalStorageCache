@@ -6,7 +6,7 @@ Overall, Obaki.LocalStorageCache is a simple and easy-to-use library that can he
 **NOTE:** As of this writing the library has a bare minimum method that only fetch the cache data or refresh the cache based on the specified time-to-live(hrs) asynchronously.
 ## Installing
 
-To install the package add the following line inside your csproj file with the latest version.:
+To install the package add the following line inside your csproj file with the latest version.
 
 ```
 <PackageReference Include="Obaki.LocalStorageCache" Version="x.x.x" />
@@ -18,7 +18,7 @@ An alternative is to install via the .NET CLI with the following command:
 dotnet add package Obaki.LocalStorageCache
 ```
 
-For more information you can check the [nuget package](https://www.nuget.org/packages/Obaki.LocalSorageCache).
+For more information you can check the [nuget package](https://www.nuget.org/packages/Obaki.LocalStorageCache).
 
 ## Setup
 Register the needed services in your Program.cs file as **Scope**
@@ -39,6 +39,24 @@ public void ConfigureServices(IServiceCollection services)
 }
 ```
 ## Usage
+```c#
+using Obaki.LocalStorageCache;
+using Obaki.LocalStorageCache.Extensions;
+public class Test {
+  private readonly ILocalStorageCache _localStorageCache;
+  public Test(ILocalStorageCache localStorageCache) {
+    _localStorageCache = localStorageCache;
+  }
 
+  public async Task<TCacheData> GetData() {
+    return await _localStorageCache.GetOrCreateCacheAsync(
+      Key, //Define Key
+      async cache => {
+        cache.SetExpirationHrs(1); //Define TTL	
+        return new TCacheData(); //Refresh cache data.
+      });
+  }
+}
+```
 # License
 MIT License
