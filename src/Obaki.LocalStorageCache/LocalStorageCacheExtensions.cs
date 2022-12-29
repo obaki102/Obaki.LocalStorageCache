@@ -5,13 +5,14 @@
         public static async ValueTask<T?> GetOrCreateCacheAsync<T>(this ILocalStorageCache localCache, string key,
             Func<ILocalStorageCache, ValueTask<T>> creator)
         {
-            var result = await localCache.TryGetCacheAsync<T>(key);
-            if (result.isCacheExist)
+            var (isCacheExist, cacheData) = await localCache.TryGetCacheAsync<T>(key);
+
+            if (isCacheExist)
             {
-                if (result.cacheData is null)
+                if (cacheData is null)
                     return default;
 
-                return result.cacheData;
+                return cacheData;
             }
 
             var newCacheData = await creator(localCache).ConfigureAwait(false);

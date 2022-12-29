@@ -73,12 +73,7 @@ namespace Obaki.LocalStorageCache
 
             var cacheData = await _localStorageService.GetItemAsync<CacheData<T>>(key).ConfigureAwait(false);
 
-            if (cacheData is null)
-            {
-                return (false, default);
-            }
-
-            if ((DateTime.UtcNow - cacheData.Created) > _cacheExpiration)
+            if (cacheData is null || (DateTime.UtcNow - cacheData.Created) > _cacheExpiration)
             {
                 return (false, default);
             }

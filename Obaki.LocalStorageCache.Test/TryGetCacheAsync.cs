@@ -24,12 +24,12 @@ namespace Obaki.LocalStorageCache.Test
             await _localStorageCache.SetCacheAsync(Key, valueSaved);
 
             //Act
-            var valueFromStorage = await _localStorageCache.TryGetCacheAsync<DummyObject>(Key);
+            var (isCacheExist, cacheData) = await _localStorageCache.TryGetCacheAsync<DummyObject>(Key);
 
             //Assert
-            Assert.True(valueFromStorage.isCacheExist);
-            Assert.Equal(valueSaved.Id, valueFromStorage.cacheData.Id);
-            Assert.Equal(valueSaved.Name, valueFromStorage.cacheData.Name);
+            Assert.True(isCacheExist);
+            Assert.Equal(valueSaved.Id, cacheData.Id);
+            Assert.Equal(valueSaved.Name, cacheData.Name);
         }
 
         [Fact]
@@ -41,11 +41,11 @@ namespace Obaki.LocalStorageCache.Test
             await _localStorageCache.SetCacheAsync(Key, valueSaved);
 
             //Act
-            var valueFromStorage = await _localStorageCache.TryGetCacheAsync<DummyObject>(Key);
+            var (isCacheExist, cacheData) = await _localStorageCache.TryGetCacheAsync<DummyObject>(Key);
 
             //Assert
-            Assert.False(valueFromStorage.isCacheExist);
-            Assert.Null(valueFromStorage.cacheData);
+            Assert.False(isCacheExist);
+            Assert.Null(cacheData);
             
         }
 
@@ -68,11 +68,11 @@ namespace Obaki.LocalStorageCache.Test
             await _localStorageCache.SetCacheAsync(Key, valueSaved);
 
             //Act
-            var dataRetrieved = await _localStorageCache.TryGetCacheAsync<DummyObject>(nonExistingKey);
+            var (isCacheExist, cacheData) = await _localStorageCache.TryGetCacheAsync<DummyObject>(nonExistingKey);
 
             //Assert
-            Assert.False(dataRetrieved.isCacheExist);
-            Assert.Null(dataRetrieved.cacheData);
+            Assert.False(isCacheExist);
+            Assert.Null(cacheData);
         }
     }
 }

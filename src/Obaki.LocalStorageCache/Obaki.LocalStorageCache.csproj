@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
     <AssemblyName>$(MSBuildProjectName)</AssemblyName>
     <Title>Obaki.LocalStorageCache</Title>
-    <Version>1.0.9</Version>
+    <Version>1.0.10</Version>
     <Authors>obaki102</Authors>
     <Company>obaki102</Company>
     <Description>A simple library that cache data into the browsers local storage.</Description>
