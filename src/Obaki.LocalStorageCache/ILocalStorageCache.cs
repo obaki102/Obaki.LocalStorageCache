@@ -7,7 +7,7 @@ namespace Obaki.LocalStorageCache
     {
         ValueTask<(bool isCacheExist, T? cacheData)> TryGetCacheValue<T>(string key);
 
-        ValueTask<T> GetCacheValue<T>(string key);
+        ValueTask<T?> GetCacheValue<T>(string key);
 
         ValueTask ClearCacheValue(string key);
 

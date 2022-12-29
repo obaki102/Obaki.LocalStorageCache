@@ -24,9 +24,9 @@ namespace Obaki.LocalStorageCache.Test
 
             //Act
             await _localStorageCache.SetCacheValue(Key, valueToSave);
-            var test = _storageCache.IsItemExist(Key);
+           
             //Assert
-            var valueFromStorage = _localStorageCache.GetCacheValue<DummyObject>(Key).Result;
+            var valueFromStorage = await _localStorageCache.GetCacheValue<DummyObject>(Key);
             Assert.Equal(valueToSave.Id, valueFromStorage.Id);
             Assert.Equal(valueToSave.Name, valueFromStorage.Name);
         }
@@ -41,6 +41,7 @@ namespace Obaki.LocalStorageCache.Test
             //Act
             await _localStorageCache.SetCacheValue(Key, valueToSave);
             await _localStorageCache.SetCacheValue(Key, valueToSave2);
+
             //Assert
             var valueFromStorage = _localStorageCache.GetCacheValue<DummyObject>(Key).Result;
             Assert.Equal(valueToSave2.Id, valueFromStorage.Id);

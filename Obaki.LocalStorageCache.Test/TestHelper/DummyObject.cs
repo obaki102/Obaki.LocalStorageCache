@@ -8,7 +8,7 @@ namespace Obaki.LocalStorageCache.Test.TestHelper
 {
     public class DummyObject
     {
-        public int Id { get; set; }
+        public int Id { get; set; } 
         public string  Name { get; set; } = string.Empty;
         public DummyObject()
         {

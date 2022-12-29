@@ -30,7 +30,7 @@ namespace Obaki.LocalStorageCache
             await _localStorageService.RemoveItemAsync(key).ConfigureAwait(false);
         }
 
-        public async ValueTask<T> GetCacheValue<T>(string key)
+        public async ValueTask<T?> GetCacheValue<T>(string key)
         {
             if (string.IsNullOrEmpty(key))
             {
@@ -41,7 +41,7 @@ namespace Obaki.LocalStorageCache
 
             if (cacheData is null || cacheData.Cache is null)
             {
-                throw new ArgumentNullException(nameof(T), "Cache data is empty.");
+                return default;
             }
 
             return cacheData.Cache;
