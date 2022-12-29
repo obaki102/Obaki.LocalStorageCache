@@ -2,14 +2,14 @@
 {
     public static class LocalStorageCacheExtensions
     {
-        public static async ValueTask<T> GetOrCreateCacheAsync<T>(this ILocalStorageCache localCache, string key,
+        public static async ValueTask<T?> GetOrCreateCacheAsync<T>(this ILocalStorageCache localCache, string key,
             Func<ILocalStorageCache, ValueTask<T>> creator)
         {
             var result = await localCache.TryGetCacheValue<T>(key);
             if (result.isCacheExist)
             {
                 if (result.cacheData is null)
-                    throw new ArgumentNullException(nameof(result.cacheData), "Cache data is empty;");
+                    return default;
 
                 return result.cacheData;
             }
