@@ -20,7 +20,7 @@ namespace Obaki.LocalStorageCache
 
         }
 
-        public async ValueTask ClearCacheValue(string key)
+        public async ValueTask ClearCacheAsync(string key)
         {
             if (string.IsNullOrEmpty(key))
             {
@@ -30,7 +30,7 @@ namespace Obaki.LocalStorageCache
             await _localStorageService.RemoveItemAsync(key).ConfigureAwait(false);
         }
 
-        public async ValueTask<T?> GetCacheValue<T>(string key)
+        public async ValueTask<T?> GetCacheAsync<T>(string key)
         {
             if (string.IsNullOrEmpty(key))
             {
@@ -47,7 +47,7 @@ namespace Obaki.LocalStorageCache
             return cacheData.Cache;
         }
 
-        public async ValueTask SetCacheValue<T>(string key, T data)
+        public async ValueTask SetCacheAsync<T>(string key, T data)
         {
             if (string.IsNullOrEmpty(key))
             {
@@ -64,7 +64,7 @@ namespace Obaki.LocalStorageCache
             await _localStorageService.SetItemAsync(key, cacheData).ConfigureAwait(false);
         }
 
-        public async ValueTask<(bool isCacheExist, T? cacheData)> TryGetCacheValue<T>(string key)
+        public async ValueTask<(bool isCacheExist, T? cacheData)> TryGetCacheAsync<T>(string key)
         {
             if (string.IsNullOrEmpty(key))
             {

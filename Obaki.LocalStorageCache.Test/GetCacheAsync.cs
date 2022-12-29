@@ -2,13 +2,13 @@
 
 namespace Obaki.LocalStorageCache.Test
 {
-    public class GetCacheValue
+    public class GetCacheAsync
     {
         private readonly InMemoryStorageCache _storageCache;
         private readonly LocalStorageCacheProvider _localStorageCache;
         public const string Key = "TestKey";
 
-        public GetCacheValue()
+        public GetCacheAsync()
         {
             _storageCache = new InMemoryStorageCache();
             _localStorageCache = new LocalStorageCacheProvider(_storageCache);
@@ -16,14 +16,14 @@ namespace Obaki.LocalStorageCache.Test
 
 
         [Fact]
-        public async Task GetCacheValue_ValidKey_DataShouldBeRetrieved()
+        public async Task GetCacheAsync_ValidKey_DataShouldBeRetrieved()
         {
             //Arrange
             var valueSaved = new DummyObject(1, "Test");
-            await _localStorageCache.SetCacheValue(Key, valueSaved);
+            await _localStorageCache.SetCacheAsync(Key, valueSaved);
 
             //Act
-            var dataRetrieved = await _localStorageCache.GetCacheValue<DummyObject>(Key);
+            var dataRetrieved = await _localStorageCache.GetCacheAsync<DummyObject>(Key);
 
             //Assert
             Assert.Equal(valueSaved.Id, dataRetrieved.Id);
@@ -31,29 +31,29 @@ namespace Obaki.LocalStorageCache.Test
         }
 
         [Fact]
-        public async Task GetCacheValue_EmptyKey_ShouldThrowAnError()
+        public async Task GetCacheAsync_EmptyKey_ShouldThrowAnError()
         {
             //Arrange
             var valueSaved = new DummyObject(1, "Test");
-            await _localStorageCache.SetCacheValue(Key, valueSaved);
+            await _localStorageCache.SetCacheAsync(Key, valueSaved);
 
             //Act
-            var function = new Func<Task>(async () => await _localStorageCache.GetCacheValue<DummyObject>(string.Empty));
+            var function = new Func<Task>(async () => await _localStorageCache.GetCacheAsync<DummyObject>(string.Empty));
 
             //Assert
            await Assert.ThrowsAsync<ArgumentNullException>(function);
         }
 
         [Fact]
-        public async Task GetCacheValue_NonExistingKey_ShouldReturnNull()
+        public async Task GetCacheAsync_NonExistingKey_ShouldReturnNull()
         {
             //Arrange
             string nonExistingKey = "InvalidKey";
             var valueSaved = new DummyObject(1, "Test");
-            await _localStorageCache.SetCacheValue(Key, valueSaved);
+            await _localStorageCache.SetCacheAsync(Key, valueSaved);
 
             //Act
-            var dataRetrieved = await _localStorageCache.GetCacheValue<DummyObject>(nonExistingKey);
+            var dataRetrieved = await _localStorageCache.GetCacheAsync<DummyObject>(nonExistingKey);
 
             //Assert
             Assert.Null(dataRetrieved);
