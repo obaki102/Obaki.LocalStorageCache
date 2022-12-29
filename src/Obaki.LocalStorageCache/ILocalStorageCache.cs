@@ -13,6 +13,6 @@ namespace Obaki.LocalStorageCache
 
         ValueTask SetCacheValue<T>(string key, T Data);
 
-        int CacheExpirationHrs { get; set; }
+        TimeSpan  CacheExpiration { get; set; }
     }
 }

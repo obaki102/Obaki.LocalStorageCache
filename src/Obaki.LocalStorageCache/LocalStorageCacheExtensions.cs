@@ -20,7 +20,7 @@
             return newCacheData;
         }
 
-        public static async ValueTask<T> GetCacheAsync<T>(this ILocalStorageCache localCache, string key)
+        public static async ValueTask<T?> GetCacheAsync<T>(this ILocalStorageCache localCache, string key)
         {
             return await localCache.GetCacheValue<T>(key);
         }
@@ -30,9 +30,9 @@
             await localCache.ClearCacheValue(key);
         }
 
-        public static ILocalStorageCache SetExpirationHrs(this ILocalStorageCache localCache, int expirationHrs)
+        public static ILocalStorageCache SetExpiration(this ILocalStorageCache localCache, TimeSpan cacheExpiration)
         {
-            localCache.CacheExpirationHrs = expirationHrs;
+            localCache.CacheExpiration = cacheExpiration;
             return localCache;
         }
     }

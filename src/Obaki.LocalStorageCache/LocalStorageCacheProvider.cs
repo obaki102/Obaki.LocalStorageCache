@@ -6,17 +6,17 @@ namespace Obaki.LocalStorageCache
     {
 
         private readonly ILocalStorageService _localStorageService;
-        private int _cacheExpirationHrs;
+        private TimeSpan _cacheExpiration;
 
         public LocalStorageCacheProvider(ILocalStorageService localStorageService)
         {
             _localStorageService = localStorageService;
         }
 
-        public int CacheExpirationHrs
+        public TimeSpan CacheExpiration
         {
-            get => _cacheExpirationHrs;
-            set => _cacheExpirationHrs = value;
+            get => _cacheExpiration;
+            set => _cacheExpiration = value;
 
         }
 
@@ -59,10 +59,7 @@ namespace Obaki.LocalStorageCache
                 throw new ArgumentNullException(nameof(T), "Cache data is empty.");
             }
 
-            var cacheData = new CacheData<T>
-            {
-                Cache = data,
-            };
+            var cacheData = new CacheData<T>(data);
 
             await _localStorageService.SetItemAsync(key, cacheData).ConfigureAwait(false);
         }
@@ -75,20 +72,18 @@ namespace Obaki.LocalStorageCache
             }
 
             var cacheData = await _localStorageService.GetItemAsync<CacheData<T>>(key).ConfigureAwait(false);
-            double totalHrsSinceCacheCreated = 0;
 
-            if (cacheData is not null)
+            if (cacheData is null)
             {
-                totalHrsSinceCacheCreated = DateTime.Now.Subtract(cacheData.Created).TotalHours;
+                return (false, default);
             }
 
-            if (cacheData is null || totalHrsSinceCacheCreated > CacheExpirationHrs)
+            if ((DateTime.UtcNow - cacheData.Created) > _cacheExpiration)
             {
                 return (false, default);
             }
 
             return (true, cacheData.Cache);
         }
-
     }
 }

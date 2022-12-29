@@ -6,7 +6,13 @@
 
         public CacheData()
         {
-            _createDateTime = DateTime.Now;
+            _createDateTime = DateTime.UtcNow;
+        }
+
+        public CacheData(T data)
+        {
+            Cache = data;
+            _createDateTime = DateTime.UtcNow;
         }
 
         public T? Cache { get; init; }
