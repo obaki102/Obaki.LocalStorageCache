@@ -53,7 +53,7 @@ public class Test {
     return await _localStorageCache.GetOrCreateCacheAsync(
       Key, //Define Key
       async cache => {
-        cache.SetExpirationHrs(1); //Define TTL	
+        cache.SetExpiration(TimeSpan.FromHours(1)); //Define TTL	
         return new TCacheData(); //Refresh cache data.
       });
   }
