@@ -44,6 +44,7 @@ using Obaki.LocalStorageCache;
 
 public class Test {
   private readonly ILocalStorageCache _localStorageCache;
+  
   public Test(ILocalStorageCache localStorageCache) {
     _localStorageCache = localStorageCache;
   }
