@@ -54,7 +54,7 @@ public class Test {
       Key, //Define Key
       async cache => {
         cache.SetExpiration(TimeSpan.FromHours(1)); //Define TTL	
-        return new TCacheData(); //Refresh cache data.
+        return await TCacheData(); //Refresh cache data.
       });
   }
 }
