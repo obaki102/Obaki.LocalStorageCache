@@ -21,4 +21,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\src\Obaki.LocalStorageCache\Obaki.LocalStorageCache.csproj" />
+  </ItemGroup>
+
 </Project>
