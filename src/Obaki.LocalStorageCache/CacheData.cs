@@ -1,6 +1,6 @@
 ﻿namespace Obaki.LocalStorageCache
 {
-    public record CacheData<T>
+    public class CacheData<T>
     {
         private DateTime _createDateTime;
 
@@ -15,8 +15,17 @@
             _createDateTime = DateTime.UtcNow;
         }
 
+        public CacheData(T data, bool isProtected)
+        {
+            Cache = data;
+            _createDateTime = DateTime.UtcNow;
+            IsProtected = isProtected;
+        }
+
         public T? Cache { get; init; }
 
         public DateTime Created { get => _createDateTime; set => _createDateTime = value; }
+
+        public bool IsProtected { get; set; }
     }
 }

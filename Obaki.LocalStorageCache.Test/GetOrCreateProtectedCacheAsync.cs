@@ -1,35 +1,38 @@
-﻿using Microsoft.AspNetCore.DataProtection;
-using Moq;
-using Obaki.LocalStorageCache.Test.TestHelper;
+﻿using Obaki.LocalStorageCache.Test.TestHelper;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Obaki.LocalStorageCache.Test
 {
-    public class GetOrCreateCacheAsync
+    public class GetOrCreateProtectedCacheAsync
     {
         private readonly InMemoryStorageCache _storageCache;
         private readonly LocalStorageCacheProvider _localStorageCache;
+        private readonly TestDataProtectionProvider _testDataProtectionProvider;
         public const string Key = "TestKey";
 
-        public GetOrCreateCacheAsync()
+        public GetOrCreateProtectedCacheAsync()
         {
             _storageCache = new InMemoryStorageCache();
-            var mockDataProtector = new Mock<IDataProtector>();
-            _localStorageCache = new LocalStorageCacheProvider(_storageCache, mockDataProtector.Object);
+            _testDataProtectionProvider = new TestDataProtectionProvider();
+            _localStorageCache = new LocalStorageCacheProvider(_storageCache, _testDataProtectionProvider);
         }
-
         [Theory]
         [InlineData(1, "Test")]
         [InlineData(2, "Test2")]
         [InlineData(3, "Test3")]
         [InlineData(4, "Test4")]
-        public async Task GetOrCreateCacheAsync_ValidKey_DataShouldBeRetrievedFromCache(int id, string name)
+        public async Task GetOrCreateProtectedCacheAsync_ValidKey_DataShouldBeRetrievedFromCache(int id, string name)
         {
             //Arrange
             var cacheSaved = new DummyObject(id, name);
-            await _localStorageCache.SetCacheAsync(Key, cacheSaved);
+            await _localStorageCache.SetProtectedCacheAsync(Key, cacheSaved);
 
             //Act
-            var cacheRetrieved = await _localStorageCache.GetOrCreateCacheAsync(
+            var cacheRetrieved = await _localStorageCache.GetOrCreateProtectedCacheAsync(
                   Key,
                    TimeSpan.FromHours(1),
                   async () =>
@@ -43,15 +46,15 @@ namespace Obaki.LocalStorageCache.Test
         }
 
         [Fact]
-        public async Task GetOrCreateCacheAsync_CacheExpired_NewCacheShouldBeReturned()
+        public async Task GetOrCreateProtectedCacheAsync_CacheExpired_NewCacheShouldBeReturned()
         {
             //Arrange
             var cacheSaved = new DummyObject(1, "Test");
-            await _localStorageCache.SetCacheAsync(Key, cacheSaved);
+            await _localStorageCache.SetProtectedCacheAsync(Key, cacheSaved);
             var newCache = new DummyObject(2, "Test2");
 
             //Act
-            var cacheRetrieved = await _localStorageCache.GetOrCreateCacheAsync(
+            var cacheRetrieved = await _localStorageCache.GetOrCreateProtectedCacheAsync(
                   Key,
                   TimeSpan.FromHours(-1),
                   async () =>
@@ -65,13 +68,13 @@ namespace Obaki.LocalStorageCache.Test
         }
 
         [Fact]
-        public async Task GetOrCreateCacheAsync_FirstTimeCacheIsCreated_NewCacheShouldBeReturned()
+        public async Task GetOrCreateProtectedCacheAsync_FirstTimeCacheIsCreated_NewCacheShouldBeReturned()
         {
             //Arrange
             var newCache = new DummyObject(2, "Test2");
 
             //Act
-            var cacheRetrieved = await _localStorageCache.GetOrCreateCacheAsync(
+            var cacheRetrieved = await _localStorageCache.GetOrCreateProtectedCacheAsync(
                   Key,
                   TimeSpan.FromHours(1),
                   async () =>
@@ -85,13 +88,13 @@ namespace Obaki.LocalStorageCache.Test
         }
 
         [Fact]
-        public async Task GetOrCreateCacheAsync_EmptyKey_ErrorShouldBeThrown()
+        public async Task GetOrCreateProtectedCacheAsync_EmptyKey_ErrorShouldBeThrown()
         {
             //Arrange
             var newCache = new DummyObject(2, "Test2");
 
             //Act
-            var function = new Func<Task>(async () => await _localStorageCache.GetOrCreateCacheAsync(
+            var function = new Func<Task>(async () => await _localStorageCache.GetOrCreateProtectedCacheAsync(
                   string.Empty,
                   TimeSpan.FromHours(1),
                   async () =>
@@ -104,16 +107,16 @@ namespace Obaki.LocalStorageCache.Test
         }
 
         [Fact]
-        public async Task GetOrCreateCacheAsync_NonExistingKey_CreateNewCache()
+        public async Task GetOrCreateProtectedCacheAsync_NonExistingKey_CreateNewCache()
         {
             //Arrange
             string nonExsitingKey = "NonExsitingKey";
             var cacheSaved = new DummyObject(1, "Test");
-            await _localStorageCache.SetCacheAsync(Key, cacheSaved);
+            await _localStorageCache.SetProtectedCacheAsync(Key, cacheSaved);
             var newCache = new DummyObject(2, "Test2");
 
             //Act
-            var cacheRetrieved = await _localStorageCache.GetOrCreateCacheAsync(
+            var cacheRetrieved = await _localStorageCache.GetOrCreateProtectedCacheAsync(
                    nonExsitingKey,
                    TimeSpan.FromHours(1),
                    async () =>

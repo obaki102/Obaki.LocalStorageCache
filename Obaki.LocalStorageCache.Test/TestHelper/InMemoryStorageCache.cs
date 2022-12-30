@@ -21,10 +21,7 @@ namespace Obaki.LocalStorageCache.Test.TestHelper
             throw new NotImplementedException();
         }
 
-        public ValueTask<string> GetItemAsStringAsync(string key, CancellationToken cancellationToken = default)
-        {
-            throw new NotImplementedException();
-        }
+        
         public ValueTask<string> KeyAsync(int index, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
@@ -43,11 +40,7 @@ namespace Obaki.LocalStorageCache.Test.TestHelper
         {
             throw new NotImplementedException();
         }
-
-        public ValueTask SetItemAsStringAsync(string key, string data, CancellationToken cancellationToken = default)
-        {
-            throw new NotImplementedException();
-        }
+      
         #endregion
 
         public ValueTask<T> GetItemAsync<T>(string key, CancellationToken cancellationToken = default)
@@ -91,6 +84,28 @@ namespace Obaki.LocalStorageCache.Test.TestHelper
         public bool IsItemExist(string key)
         {
             return _memoryStore.ContainsKey(key);
+        }
+
+        public ValueTask SetItemAsStringAsync(string key, string data, CancellationToken cancellationToken = default)
+        {
+            SetItem(key, data);
+
+            return new ValueTask(Task.CompletedTask);
+        }
+
+        public ValueTask<string> GetItemAsStringAsync(string key, CancellationToken cancellationToken = default)
+        {
+            if (IsItemExist(key))
+            {
+                var data = ReadRawString(key);
+                return ValueTask.FromResult(data);
+            }
+
+            return ValueTask.FromResult(string.Empty);
+        }
+        public string ReadRawString(string key)
+        {
+            return _memoryStore[key];
         }
     }
 }
