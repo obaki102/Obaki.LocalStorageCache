@@ -23,9 +23,7 @@ namespace Obaki.LocalStorageCache
         public async ValueTask ClearCacheAsync(string key)
         {
             if (string.IsNullOrEmpty(key))
-            {
                 throw new ArgumentNullException(nameof(key));
-            }
 
             await _localStorageService.RemoveItemAsync(key).ConfigureAwait(false);
         }
@@ -33,16 +31,12 @@ namespace Obaki.LocalStorageCache
         public async ValueTask<T?> GetCacheAsync<T>(string key)
         {
             if (string.IsNullOrEmpty(key))
-            {
                 throw new ArgumentNullException(nameof(key));
-            }
 
             var cacheData = await _localStorageService.GetItemAsync<CacheData<T>>(key).ConfigureAwait(false);
 
             if (cacheData is null || cacheData.Cache is null)
-            {
                 return default;
-            }
 
             return cacheData.Cache;
         }
@@ -50,14 +44,10 @@ namespace Obaki.LocalStorageCache
         public async ValueTask SetCacheAsync<T>(string key, T data)
         {
             if (string.IsNullOrEmpty(key))
-            {
                 throw new ArgumentNullException(nameof(key));
-            }
          
             if (data is null)
-            {
                 throw new ArgumentNullException(nameof(T));
-            }
 
             var cacheData = new CacheData<T>(data);
 
@@ -67,16 +57,12 @@ namespace Obaki.LocalStorageCache
         public async ValueTask<(bool isCacheExist, T? cacheData)> TryGetCacheAsync<T>(string key)
         {
             if (string.IsNullOrEmpty(key))
-            {
                 throw new ArgumentNullException(nameof(key));
-            }
 
             var cacheData = await _localStorageService.GetItemAsync<CacheData<T>>(key).ConfigureAwait(false);
 
             if (cacheData is null || (DateTime.UtcNow - cacheData.Created) > _cacheExpiration)
-            {
                 return (false, default);
-            }
 
             return (true, cacheData.Cache);
         }

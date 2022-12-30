@@ -1,6 +1,6 @@
 ﻿namespace Obaki.LocalStorageCache
 {
-    public record CacheData<T>
+    public class CacheData<T>
     {
         private DateTime _createDateTime;
 
