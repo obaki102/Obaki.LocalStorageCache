@@ -59,7 +59,7 @@ public class Test {
   }
 }
 ```
-## Protected Cache Dsclaimer
+## Protected Cache Disclaimer
 Please note Microsoft explicitly disabled using data protection in client browser since this give users a [false sense of security](https://github.com/dotnet/aspnetcore/blob/main/src/Components/Server/src/ProtectedBrowserStorage/ProtectedBrowserStorage.cs), this is the reason why ProtectedBrowserStorage only works inside a server.  
 
 The purpose of me implementing data protection is to provide an option to encrypt your cache data in local storage. But this is not in any form will make your cache data secure, highly sensitive and confidential data should always be stored inside a server.
