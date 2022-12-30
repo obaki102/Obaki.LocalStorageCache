@@ -59,7 +59,7 @@ namespace Obaki.LocalStorageCache
 
             if (string.IsNullOrEmpty(cacheAsString))
                 return default;
-        
+
             var cacheData = Unprotect<CacheData<T>>(CreatePurposeFromKey(key), cacheAsString);
 
             return cacheData.Cache;
@@ -70,7 +70,7 @@ namespace Obaki.LocalStorageCache
             if (string.IsNullOrEmpty(key))
                 throw new ArgumentNullException(nameof(key));
 
-         
+
             if (data is null)
                 throw new ArgumentNullException(nameof(T));
 
@@ -88,7 +88,7 @@ namespace Obaki.LocalStorageCache
                 throw new ArgumentNullException(nameof(T));
 
             var cacheData = new CacheData<T>(data, true);
-        
+
             var protectedCacheData = Protect(CreatePurposeFromKey(key), cacheData);
 
             await _localStorageService.SetItemAsStringAsync(key, protectedCacheData).ConfigureAwait(false);
@@ -102,6 +102,7 @@ namespace Obaki.LocalStorageCache
 
             var cacheData = await _localStorageService.GetItemAsync<CacheData<T>>(key).ConfigureAwait(false);
 
+            if (cacheData is null || (DateTime.UtcNow - cacheData.Created) > _cacheExpiration)
                 return (false, default);
 
             return (true, cacheData.Cache);
@@ -116,15 +117,14 @@ namespace Obaki.LocalStorageCache
                 return (false, default);
 
             var cacheAsString = await _localStorageService.GetItemAsStringAsync(key).ConfigureAwait(false);
-           
+
             var cacheData = Unprotect<CacheData<T>>(CreatePurposeFromKey(key), cacheAsString);
-            
+
             if (cacheData is null || (DateTime.UtcNow - cacheData.Created) > _cacheExpiration)
-            {
+                return (false, default);
 
             return (true, cacheData.Cache);
         }
-            }
 
         private string Protect(string purpose, object value)
         {
