@@ -13,20 +13,7 @@ namespace Obaki.LocalStorageCache
                 throw new ArgumentNullException(nameof(services));
             }
             services.AddBlazoredLocalStorage();
-            services.AddDataProtection();
             services.TryAddScoped<ILocalStorageCache, LocalStorageCacheProvider>();
-            return services;
-        }
-
-        public static IServiceCollection AddLocalStorageCacheAsSingleton(this IServiceCollection services)
-        {
-            if (services == null)
-            {
-                throw new ArgumentNullException(nameof(services));
-            }
-            services.AddBlazoredLocalStorageAsSingleton();
-            services.AddDataProtection();
-            services.TryAddSingleton<ILocalStorageCache, LocalStorageCacheProvider>();
             return services;
         }
     }

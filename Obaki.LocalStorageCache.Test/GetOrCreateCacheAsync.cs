@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.DataProtection;
-using Moq;
-using Obaki.LocalStorageCache.Test.TestHelper;
+﻿using Obaki.LocalStorageCache.Test.TestHelper;
 
 namespace Obaki.LocalStorageCache.Test
 {
@@ -13,8 +11,7 @@ namespace Obaki.LocalStorageCache.Test
         public GetOrCreateCacheAsync()
         {
             _storageCache = new InMemoryStorageCache();
-            var mockDataProtector = new Mock<IDataProtector>();
-            _localStorageCache = new LocalStorageCacheProvider(_storageCache, mockDataProtector.Object);
+            _localStorageCache = new LocalStorageCacheProvider(_storageCache);
         }
 
         [Theory]
