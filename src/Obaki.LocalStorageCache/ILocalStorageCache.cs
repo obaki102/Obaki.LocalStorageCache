@@ -7,12 +7,18 @@ namespace Obaki.LocalStorageCache
     {
         ValueTask<(bool isCacheExist, T? cacheData)> TryGetCacheAsync<T>(string key);
 
+        ValueTask<(bool isCacheExist, T? cacheData)> TryGetProtectedCacheAsync<T>(string key);
+
         ValueTask<T?> GetCacheAsync<T>(string key);
+
+        ValueTask<T?> GetProtectedCacheAsync<T>(string key);
 
         ValueTask ClearCacheAsync(string key);
 
-        ValueTask SetCacheAsync<T>(string key, T Data);
+        ValueTask SetCacheAsync<T>(string key, T data);
 
-        TimeSpan  CacheExpiration { get; set; }
+        ValueTask SetProtectedCacheAsync<T>(string key, T data);
+
+        TimeSpan CacheExpiration { get; set; }
     }
 }
