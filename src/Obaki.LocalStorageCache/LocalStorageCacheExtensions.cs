@@ -3,7 +3,7 @@
     public static class LocalStorageCacheExtensions
     {
         public static async ValueTask<T?> GetOrCreateCacheAsync<T>(this ILocalStorageCache localStorageCache, string key, TimeSpan cacheExpiration,
-            Func<ValueTask<T>> cacheGenerator)
+            Func<ValueTask<T?>> cacheGenerator)
         {
             localStorageCache.CacheExpiration = cacheExpiration;
             var (isCacheExist, cacheData) = await localStorageCache.TryGetCacheAsync<T>(key);
