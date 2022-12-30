@@ -45,7 +45,7 @@ namespace Obaki.LocalStorageCache
             if (string.IsNullOrEmpty(key))
                 throw new ArgumentNullException(nameof(key));
 
-         
+
             if (data is null)
                 throw new ArgumentNullException(nameof(T));
 
