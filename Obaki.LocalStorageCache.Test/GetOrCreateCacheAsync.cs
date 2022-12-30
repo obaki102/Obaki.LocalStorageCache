@@ -15,7 +15,6 @@ namespace Obaki.LocalStorageCache.Test
             _localStorageCache = new LocalStorageCacheProvider(_storageCache);
         }
 
-
         [Theory]
         [InlineData(1, "Test")]
         [InlineData(2, "Test2")]
