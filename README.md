@@ -56,6 +56,7 @@ public class Test {
        async () =>
          return await GetNewData(); //Refresh cache data.
       });
+      
     return cache ?? default;
   }
 }
