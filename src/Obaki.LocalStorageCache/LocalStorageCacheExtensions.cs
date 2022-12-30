@@ -1,11 +1,14 @@
-﻿namespace Obaki.LocalStorageCache
+﻿using System;
+
+namespace Obaki.LocalStorageCache
 {
     public static class LocalStorageCacheExtensions
     {
-        public static async ValueTask<T?> GetOrCreateCacheAsync<T>(this ILocalStorageCache localCache, string key,
-            Func<ILocalStorageCache, ValueTask<T>> creator)
+        public static async ValueTask<T?> GetOrCreateCacheAsync<T>(this ILocalStorageCache localStorageCache, string key, TimeSpan cacheExpiration,
+            Func<ValueTask<T>> cacheGenerator)
         {
-            var (isCacheExist, cacheData) = await localCache.TryGetCacheAsync<T>(key);
+            localStorageCache.CacheExpiration = cacheExpiration;
+            var (isCacheExist, cacheData) = await localStorageCache.TryGetCacheAsync<T>(key);
 
             if (isCacheExist)
             {
@@ -15,16 +18,10 @@
                 return cacheData;
             }
 
-            var newCacheData = await creator(localCache).ConfigureAwait(false);
-            await localCache.SetCacheAsync(key, newCacheData);
+            var newCacheData = await cacheGenerator().ConfigureAwait(false);
+            await localStorageCache.SetCacheAsync(key, newCacheData);
 
             return newCacheData;
-        }
-
-        public static ILocalStorageCache SetExpiration(this ILocalStorageCache localCache, TimeSpan cacheExpiration)
-        {
-            localCache.CacheExpiration = cacheExpiration;
-            return localCache;
         }
     }
 }

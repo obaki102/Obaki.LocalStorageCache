@@ -24,7 +24,7 @@ namespace Obaki.LocalStorageCache
         {
             if (string.IsNullOrEmpty(key))
             {
-                throw new ArgumentNullException(nameof(key), "Key is empty.");
+                throw new ArgumentNullException(nameof(key));
             }
 
             await _localStorageService.RemoveItemAsync(key).ConfigureAwait(false);
@@ -34,7 +34,7 @@ namespace Obaki.LocalStorageCache
         {
             if (string.IsNullOrEmpty(key))
             {
-                throw new ArgumentNullException(nameof(key), "Key is empty.");
+                throw new ArgumentNullException(nameof(key));
             }
 
             var cacheData = await _localStorageService.GetItemAsync<CacheData<T>>(key).ConfigureAwait(false);
@@ -51,12 +51,12 @@ namespace Obaki.LocalStorageCache
         {
             if (string.IsNullOrEmpty(key))
             {
-                throw new ArgumentNullException(nameof(key), "Key is empty.");
+                throw new ArgumentNullException(nameof(key));
             }
-
+         
             if (data is null)
             {
-                throw new ArgumentNullException(nameof(T), "Cache data is empty.");
+                throw new ArgumentNullException(nameof(T));
             }
 
             var cacheData = new CacheData<T>(data);
@@ -68,7 +68,7 @@ namespace Obaki.LocalStorageCache
         {
             if (string.IsNullOrEmpty(key))
             {
-                throw new ArgumentNullException(nameof(key), "Key is empty.");
+                throw new ArgumentNullException(nameof(key));
             }
 
             var cacheData = await _localStorageService.GetItemAsync<CacheData<T>>(key).ConfigureAwait(false);

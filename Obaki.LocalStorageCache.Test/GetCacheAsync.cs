@@ -19,23 +19,23 @@ namespace Obaki.LocalStorageCache.Test
         public async Task GetCacheAsync_ValidKey_DataShouldBeRetrieved()
         {
             //Arrange
-            var valueSaved = new DummyObject(1, "Test");
-            await _localStorageCache.SetCacheAsync(Key, valueSaved);
+            var cacheSaved = new DummyObject(1, "Test");
+            await _localStorageCache.SetCacheAsync(Key, cacheSaved);
 
             //Act
-            var dataRetrieved = await _localStorageCache.GetCacheAsync<DummyObject>(Key);
+            var cacheRetrieved = await _localStorageCache.GetCacheAsync<DummyObject>(Key);
 
             //Assert
-            Assert.Equal(valueSaved.Id, dataRetrieved.Id);
-            Assert.Equal(valueSaved.Name, dataRetrieved.Name);
+            Assert.Equal(cacheSaved.Id, cacheRetrieved.Id);
+            Assert.Equal(cacheSaved.Name, cacheRetrieved.Name);
         }
 
         [Fact]
         public async Task GetCacheAsync_EmptyKey_ShouldThrowAnError()
         {
             //Arrange
-            var valueSaved = new DummyObject(1, "Test");
-            await _localStorageCache.SetCacheAsync(Key, valueSaved);
+            var cacheSaved = new DummyObject(1, "Test");
+            await _localStorageCache.SetCacheAsync(Key, cacheSaved);
 
             //Act
             var function = new Func<Task>(async () => await _localStorageCache.GetCacheAsync<DummyObject>(string.Empty));
@@ -48,15 +48,15 @@ namespace Obaki.LocalStorageCache.Test
         public async Task GetCacheAsync_NonExistingKey_ShouldReturnNull()
         {
             //Arrange
-            string nonExistingKey = "InvalidKey";
-            var valueSaved = new DummyObject(1, "Test");
-            await _localStorageCache.SetCacheAsync(Key, valueSaved);
+            string nonExistingKey = "EmptyKey";
+            var cacheSaved = new DummyObject(1, "Test");
+            await _localStorageCache.SetCacheAsync(Key, cacheSaved);
 
             //Act
-            var dataRetrieved = await _localStorageCache.GetCacheAsync<DummyObject>(nonExistingKey);
+            var cacheRetrieved = await _localStorageCache.GetCacheAsync<DummyObject>(nonExistingKey);
 
             //Assert
-            Assert.Null(dataRetrieved);
+            Assert.Null(cacheRetrieved);
         }
     }
 }
