@@ -60,7 +60,7 @@ public class Test {
 }
 ```
 ## What's Next?
-Working to mask the cache data inside the local loca storage. Masking != Secure.  
+Working to mask the cache data inside the local local storage. Masking != Secure.  
 
 # License
 MIT License
