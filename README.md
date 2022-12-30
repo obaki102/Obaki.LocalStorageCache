@@ -52,9 +52,9 @@ public class Test {
   public async Task<TCacheData> GetData() {
     return await _localStorageCache.GetOrCreateCacheAsync(
       Key, //Define Key
-      async cache => {
-        cache.SetExpiration(TimeSpan.FromHours(1)); //Define TTL	
-        return new TCacheData(); //Refresh cache data.
+      TimeSpan.FromHours(1), //TTL
+       async () =>
+         return await TCacheData(); //Refresh cache data.
       });
   }
 }
