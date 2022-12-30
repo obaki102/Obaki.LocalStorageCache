@@ -38,7 +38,7 @@ public void ConfigureServices(IServiceCollection services)
     services.AddLocalStorageCacheAsSingleton();
 }
 ```
-## Usage
+## Usage 
 ```c#
 using Obaki.LocalStorageCache;
 
@@ -50,12 +50,14 @@ public class Test {
   }
 
   public async Task<TCacheData> GetData() {
-    return await _localStorageCache.GetOrCreateCacheAsync(
+    var cache = await _localStorageCache.GetOrCreateCacheAsync(
       Key, //Define Key
       TimeSpan.FromHours(1), //TTL
        async () =>
-         return await TCacheData(); //Refresh cache data.
+         return await GetNewData(); //Refresh cache data.
       });
+      
+    return cache ?? default;
   }
 }
 ```
