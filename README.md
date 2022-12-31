@@ -3,7 +3,7 @@ This is a simple library that allows you to easily cache data in the browser's l
 
 Overall, Obaki.LocalStorageCache is a simple and easy-to-use library that can help you improve the performance of your web application by caching data locally in the browser.
 
-**NOTE:** As of this writing the library has a bare minimum method that only fetch the cache data or refresh the cache based on the specified time-to-live(hrs) asynchronously.
+**NOTE:** As of this writing the library has a bare minimum method that only fetch the cache data or refresh the cache based on the specified time-to-live asynchronously.
 ## Installing
 
 To install the package add the following line inside your csproj file with the latest version.
