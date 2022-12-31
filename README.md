@@ -54,7 +54,7 @@ public class Test {
       Key, //Define Key
       TimeSpan.FromHours(1), //TTL
        async () =>
-         return await GetNewData(); //Refresh cache data.
+         return await GetNewData<TCacheData>(); //Refresh cache data.
       });
       
     return cache ?? default;
