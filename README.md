@@ -63,6 +63,8 @@ public class Test {
 ```
 ## What's Next?
 Working to mask the cache data inside the  local storage. Masking != Secure.  
-
+## Disclaimer
+Use only this library for caching non sensitive data.
+If you are working with highly private and confidential data , you should not be storing this data in your client's browser.
 # License
 MIT License
