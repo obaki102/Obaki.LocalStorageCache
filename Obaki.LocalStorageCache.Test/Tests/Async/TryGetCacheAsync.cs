@@ -33,7 +33,7 @@ namespace Obaki.LocalStorageCache.Test
         }
 
         [Fact]
-        public async Task TryGetCacheAsync_ExpiredCache_CacheCacheShouldReturnFalseAndCacheIsNull()
+        public async Task TryGetCacheAsync_ExpiredCache_CacheShouldReturnFalseAndCacheIsNull()
         {
             //Arrange
             var cacheSaved = new DummyObject(1, "Test");

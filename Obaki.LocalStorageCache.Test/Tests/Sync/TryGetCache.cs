@@ -15,7 +15,7 @@ namespace Obaki.LocalStorageCache.Test
         }
 
         [Fact]
-        public void TryGetCachec_ValidValueEntered_CacheShouldBeReturned()
+        public void TryGetCache_ValidValueEntered_CacheShouldBeReturned()
         {
             //Arrange
             var cacheSaved = new DummyObject(1, "Test");
@@ -32,7 +32,7 @@ namespace Obaki.LocalStorageCache.Test
         }
 
         [Fact]
-        public void TryGetCachec_ExpiredCache_CacheCacheShouldReturnFalseAndCacheIsNull()
+        public void TryGetCache_ExpiredCache_CacheShouldReturnFalseAndCacheIsNull()
         {
             //Arrange
             var cacheSaved = new DummyObject(1, "Test");
@@ -49,7 +49,7 @@ namespace Obaki.LocalStorageCache.Test
         }
 
         [Fact]
-        public void TryGetCachec_EmptyKey_ShouldThrowAnError()
+        public void TryGetCache_EmptyKey_ShouldThrowAnError()
         {
             //Act
             var action = new Action(() => _localStorageCache.TryGetCache(string.Empty, out DummyObject? cacheData));
@@ -59,7 +59,7 @@ namespace Obaki.LocalStorageCache.Test
         }
 
         [Fact]
-        public void TryGetCachec_NonExistingKey_ShouldReturnFalseAndNull()
+        public void TryGetCache_NonExistingKey_ShouldReturnFalseAndNull()
         {
             //Arrange
             string nonExistingKey = "EmptyKey";
