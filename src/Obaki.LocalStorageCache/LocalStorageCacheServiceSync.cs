@@ -53,17 +53,21 @@ namespace Obaki.LocalStorageCache
             _localSyncStorageService.SetItem(key, cacheData);
         }
 
-        public (bool isCacheExist, T? cacheData) TryGetCache<T>(string key)
+        public bool TryGetCache<T>(string key, out T? cacheData)
         {
             if (string.IsNullOrEmpty(key))
                 throw new ArgumentNullException(nameof(key));
 
-            var cacheData = _localSyncStorageService.GetItem<CacheData<T>>(key);
+             var currentCache = _localSyncStorageService.GetItem<CacheData<T>>(key);
 
-            if (cacheData is null || (DateTime.UtcNow - cacheData.Created) > _cacheExpiration)
-                return (false, default);
+            if (currentCache is null || (DateTime.UtcNow - currentCache.Created) > _cacheExpiration)
+            {
+                cacheData = default;
+                return false;
+            }
 
-            return (true, cacheData.Cache);
+            cacheData = currentCache.Cache;
+            return true;
         }
     }
 }

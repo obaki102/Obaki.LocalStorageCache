@@ -21,10 +21,10 @@
             Func<T> cacheGenerator)
         {
             localStorageCache.CacheExpiration = cacheExpiration;
-            var (isCacheExist, cacheData) =  localStorageCache.TryGetCache<T>(key);
+            var isCacheExist = localStorageCache.TryGetCache(key, out T? cache);
 
             if (isCacheExist)
-                return cacheData;
+                return cache;
 
             var newCacheData =  cacheGenerator();
             localStorageCache.SetCache(key, newCacheData);

@@ -16,7 +16,7 @@ namespace Obaki.LocalStorageCache.Test
         }
 
         [Fact]
-        public async Task TryGetCacheAsync_ValidValueEntered_CacheCacheShouldBeReturned()
+        public async Task TryGetCacheAsync_ValidValueEntered_CacheShouldBeReturned()
         {
             //Arrange
             var cacheSaved = new DummyObject(1, "Test");
@@ -33,7 +33,7 @@ namespace Obaki.LocalStorageCache.Test
         }
 
         [Fact]
-        public async Task TryGetCacheAsync_ExpiredCache_CacheCacheShouldReturnFalseAndCacheCacheIsNull()
+        public async Task TryGetCacheAsync_ExpiredCache_CacheCacheShouldReturnFalseAndCacheIsNull()
         {
             //Arrange
             var cacheSaved = new DummyObject(1, "Test");
@@ -41,11 +41,11 @@ namespace Obaki.LocalStorageCache.Test
             await _localStorageCache.SetCacheAsync(Key, cacheSaved);
 
             //Act
-            var (isCacheExist, cacheCache) = await _localStorageCache.TryGetCacheAsync<DummyObject>(Key);
+            var (isCacheExist, cacheData) = await _localStorageCache.TryGetCacheAsync<DummyObject>(Key);
 
             //Assert
             Assert.False(isCacheExist);
-            Assert.Null(cacheCache);
+            Assert.Null(cacheData);
             
         }
 
@@ -65,14 +65,15 @@ namespace Obaki.LocalStorageCache.Test
             //Arrange
             string nonExistingKey = "EmptyKey";
             var cacheSaved = new DummyObject(1, "Test");
+            _localStorageCache.CacheExpiration = TimeSpan.FromHours(1);
             await _localStorageCache.SetCacheAsync(Key, cacheSaved);
 
             //Act
-            var (isCacheExist, cacheCache) = await _localStorageCache.TryGetCacheAsync<DummyObject>(nonExistingKey);
+            var (isCacheExist, cacheData) = await _localStorageCache.TryGetCacheAsync<DummyObject>(nonExistingKey);
 
             //Assert
             Assert.False(isCacheExist);
-            Assert.Null(cacheCache);
+            Assert.Null(cacheData);
         }
     }
 }

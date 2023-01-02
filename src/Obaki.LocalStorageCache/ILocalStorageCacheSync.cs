@@ -2,7 +2,7 @@
 
 public  interface ILocalStorageCacheSync
 {
-    (bool isCacheExist, T? cacheData) TryGetCache<T>(string key);
+    bool TryGetCache<T>(string key, out T?  cacheData);
 
     T? GetCache<T>(string key);
 
