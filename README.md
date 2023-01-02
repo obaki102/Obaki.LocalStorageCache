@@ -74,7 +74,7 @@ public class TestSync {
   }
 
   public TCacheData GetDataSync() {
-    var cache = _localStorageCacheSync.GetOrCreateCacheAsync(
+    var cache = _localStorageCacheSync.GetOrCreateCache(
       Key, //Define Key
       TimeSpan.FromHours(1), //TTL
         () =>
