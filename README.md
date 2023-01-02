@@ -3,7 +3,7 @@ This is a simple library that allows you to easily cache data in the browser's l
 
 Overall, Obaki.LocalStorageCache is a simple and easy-to-use library that can help you improve the performance of your web application by caching data locally in the browser.
 
-**NOTE:** As of this writing the library has a bare minimum method that only fetch the cache data or refresh the cache based on the specified time-to-live asynchronously.
+**NOTE:** As of this writing the library has a bare minimum method that only fetch the cache data or refresh the cache based on the specified time-to-live.
 ## Installing
 
 To install the package add the following line inside your csproj file with the latest version.
@@ -39,22 +39,46 @@ public void ConfigureServices(IServiceCollection services)
 }
 ```
 ## Usage 
+**Asynchronous(Non-Blocking)**
 ```c#
 using Obaki.LocalStorageCache;
 
-public class Test {
+public class TestAsync {
   private readonly ILocalStorageCache _localStorageCache;
   
-  public Test(ILocalStorageCache localStorageCache) {
+  public TestAsync(ILocalStorageCache localStorageCache) {
     _localStorageCache = localStorageCache;
   }
 
-  public async Task<TCacheData> GetData() {
+  public async Task<TCacheData> GetDataAsync() {
     var cache = await _localStorageCache.GetOrCreateCacheAsync(
       Key, //Define Key
       TimeSpan.FromHours(1), //TTL
        async () =>
          return await GetNewData<TCacheData>(); //Refresh cache data.
+      });
+      
+    return cache ?? default;
+  }
+}
+```
+**Synchronous(Blocking)**
+```c#
+using Obaki.LocalStorageCache;
+
+public class TestSync {
+  private readonly ILocalStorageCacheSync _localStorageCacheSync;
+  
+  public TestSync(ILocalStorageCacheSync localStorageCacheSync) {
+    _localStorageCacheSync = localStorageCacheSync;
+  }
+
+  public TCacheData GetDataSync() {
+    var cache = _localStorageCacheSync.GetOrCreateCacheAsync(
+      Key, //Define Key
+      TimeSpan.FromHours(1), //TTL
+        () =>
+         return GetNewData<TCacheData>(); //Refresh cache data.
       });
       
     return cache ?? default;
