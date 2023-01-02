@@ -4,19 +4,19 @@ namespace Obaki.LocalStorageCache.Test
 {
     public class GetCacheAsync
     {
-        private readonly InMemoryStorageCache _storageCache;
-        private readonly LocalStorageCacheProvider _localStorageCache;
+        private readonly InMemoryStorageCacheAsync _storageCache;
+        private readonly LocalStorageCacheServiceAsync _localStorageCache;
         public const string Key = "TestKey";
 
         public GetCacheAsync()
         {
-            _storageCache = new InMemoryStorageCache();
-            _localStorageCache = new LocalStorageCacheProvider(_storageCache);
+            _storageCache = new InMemoryStorageCacheAsync();
+            _localStorageCache = new LocalStorageCacheServiceAsync(_storageCache);
         }
 
 
         [Fact]
-        public async Task GetCacheAsync_ValidKey_DataShouldBeRetrieved()
+        public async Task GetCacheAsync_ValidKey_CacheShouldBeRetrieved()
         {
             //Arrange
             var cacheSaved = new DummyObject(1, "Test");

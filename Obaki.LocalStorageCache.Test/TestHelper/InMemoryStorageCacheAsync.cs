@@ -3,7 +3,7 @@ using System.Text.Json;
 
 namespace Obaki.LocalStorageCache.Test.TestHelper
 {
-    internal class InMemoryStorageCache : ILocalStorageService
+    internal class InMemoryStorageCacheAsync : ILocalStorageService
     {
         private readonly Dictionary<string, string> _memoryStore = new Dictionary<string, string>();
 
@@ -47,9 +47,9 @@ namespace Obaki.LocalStorageCache.Test.TestHelper
         {
             if (IsItemExist(key))
             {
-                var data = _memoryStore[key];
-                var deserializedData = JsonSerializer.Deserialize<T>(data);
-                return new ValueTask<T>(deserializedData ?? default(T));
+                var Cache = _memoryStore[key];
+                var deserializedCache = JsonSerializer.Deserialize<T>(Cache);
+                return new ValueTask<T>(deserializedCache ?? default(T));
             }
 
             return new ValueTask<T>(default(T));
@@ -61,22 +61,22 @@ namespace Obaki.LocalStorageCache.Test.TestHelper
             return new ValueTask(Task.CompletedTask);
         }
 
-        public void SetItem(string key, string data)
+        public void SetItem(string key, string Cache)
         {
             if (_memoryStore.ContainsKey(key))
             {
-                _memoryStore[key] = data;
+                _memoryStore[key] = Cache;
             }
             else
             {
-                _memoryStore.Add(key, data);
+                _memoryStore.Add(key, Cache);
             }
         }
 
-        public ValueTask SetItemAsync<T>(string key, T data, CancellationToken cancellationToken = default)
+        public ValueTask SetItemAsync<T>(string key, T Cache, CancellationToken cancellationToken = default)
         {
-            var serializedData = JsonSerializer.Serialize(data);
-            SetItem(key, serializedData);
+            var serializedCache = JsonSerializer.Serialize(Cache);
+            SetItem(key, serializedCache);
 
             return new ValueTask(Task.CompletedTask);
         }
@@ -86,9 +86,9 @@ namespace Obaki.LocalStorageCache.Test.TestHelper
             return _memoryStore.ContainsKey(key);
         }
 
-        public ValueTask SetItemAsStringAsync(string key, string data, CancellationToken cancellationToken = default)
+        public ValueTask SetItemAsStringAsync(string key, string Cache, CancellationToken cancellationToken = default)
         {
-            SetItem(key, data);
+            SetItem(key, Cache);
 
             return new ValueTask(Task.CompletedTask);
         }
@@ -97,8 +97,8 @@ namespace Obaki.LocalStorageCache.Test.TestHelper
         {
             if (IsItemExist(key))
             {
-                var data = ReadRawString(key);
-                return ValueTask.FromResult(data);
+                var Cache = ReadRawString(key);
+                return ValueTask.FromResult(Cache);
             }
 
             return ValueTask.FromResult(string.Empty);

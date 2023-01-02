@@ -16,5 +16,20 @@
 
             return newCacheData;
         }
+
+        public static T? GetOrCreateCache<T>(this ILocalStorageCacheSync localStorageCache, string key, TimeSpan cacheExpiration,
+            Func<T> cacheGenerator)
+        {
+            localStorageCache.CacheExpiration = cacheExpiration;
+            var (isCacheExist, cacheData) =  localStorageCache.TryGetCache<T>(key);
+
+            if (isCacheExist)
+                return cacheData;
+
+            var newCacheData =  cacheGenerator();
+            localStorageCache.SetCache(key, newCacheData);
+
+            return newCacheData;
+        }
     }
 }

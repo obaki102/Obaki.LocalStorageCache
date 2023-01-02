@@ -2,13 +2,13 @@
 
 namespace Obaki.LocalStorageCache
 {
-    internal sealed class LocalStorageCacheProvider : ILocalStorageCache
+    internal sealed class LocalStorageCacheServiceAsync : ILocalStorageCache
     {
 
         private readonly ILocalStorageService _localStorageService;
         private TimeSpan _cacheExpiration;
 
-        public LocalStorageCacheProvider(ILocalStorageService localStorageService)
+        public LocalStorageCacheServiceAsync(ILocalStorageService localStorageService)
         {
             _localStorageService = localStorageService;
         }

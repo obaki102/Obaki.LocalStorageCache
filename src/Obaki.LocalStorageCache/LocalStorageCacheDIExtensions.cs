@@ -13,7 +13,8 @@ namespace Obaki.LocalStorageCache
                 throw new ArgumentNullException(nameof(services));
             }
             services.AddBlazoredLocalStorage();
-            services.TryAddScoped<ILocalStorageCache, LocalStorageCacheProvider>();
+            services.TryAddScoped<ILocalStorageCache, LocalStorageCacheServiceAsync>();
+            services.TryAddScoped<ILocalStorageCacheSync, LocalStorageCacheServiceSync>();
             return services;
         }
 
@@ -24,7 +25,8 @@ namespace Obaki.LocalStorageCache
                 throw new ArgumentNullException(nameof(services));
             }
             services.AddBlazoredLocalStorageAsSingleton();
-            services.TryAddSingleton<ILocalStorageCache, LocalStorageCacheProvider>();
+            services.TryAddSingleton<ILocalStorageCache, LocalStorageCacheServiceAsync>();
+            services.TryAddSingleton<ILocalStorageCacheSync, LocalStorageCacheServiceSync>();
             return services;
         }
     }

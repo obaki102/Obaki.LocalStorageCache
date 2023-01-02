@@ -5,19 +5,19 @@ namespace Obaki.LocalStorageCache.Test
 {
     public class SetCacheAsync
     {
-        private readonly InMemoryStorageCache _storageCache;
-        private readonly LocalStorageCacheProvider _localStorageCache;
+        private readonly InMemoryStorageCacheAsync _storageCache;
+        private readonly LocalStorageCacheServiceAsync _localStorageCache;
         public const string Key = "TestKey";
 
         public SetCacheAsync()
         {
-            _storageCache = new InMemoryStorageCache();
-            _localStorageCache = new LocalStorageCacheProvider(_storageCache);
+            _storageCache = new InMemoryStorageCacheAsync();
+            _localStorageCache = new LocalStorageCacheServiceAsync(_storageCache);
         }
 
 
         [Fact]
-        public async Task SetCacheAsync_ValidValueEntered_DataShouldBeSaved()
+        public async Task SetCacheAsync_ValidValueEntered_CacheShouldBeSaved()
         {
             //Arrange
             var cacheToSave = new DummyObject(1, "Test");
@@ -32,7 +32,7 @@ namespace Obaki.LocalStorageCache.Test
         }
 
         [Fact]
-        public async Task SetCacheAsync_ExistingValueWithSameKey_DataShouldBeOverwritten()
+        public async Task SetCacheAsync_ExistingValueWithSameKey_CacheShouldBeOverwritten()
         {
             //Arrange
             var cacheToSave = new DummyObject(1, "Test");
@@ -62,7 +62,7 @@ namespace Obaki.LocalStorageCache.Test
         }
 
         [Fact]
-        public void SetCacheAsync_EmptyData_ShouldThrowAnError()
+        public void SetCacheAsync_EmptyCache_ShouldThrowAnError()
         {
             //Arrange
             var cacheToSave = default(DummyObject);
@@ -75,7 +75,7 @@ namespace Obaki.LocalStorageCache.Test
         }
 
         [Fact]
-        public void SetCacheAsync_EmptyKeyAndData_ShouldThrowAnError()
+        public void SetCacheAsync_EmptyKeyAndCache_ShouldThrowAnError()
         {
             //Arrange
             var cacheToSave = default(DummyObject);
