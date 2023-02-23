@@ -3,7 +3,6 @@ This is a simple library that allows you to easily cache data in the browser's l
 
 Overall, Obaki.LocalStorageCache is a simple and easy-to-use library that can help you improve the performance of your web application by caching data locally in the browser.
 
-**NOTE:** As of this writing the library has a bare minimum method that only fetch the cache data or refresh the cache based on the specified time-to-live.
 ## Installing
 
 To install the package add the following line inside your csproj file with the latest version.
@@ -21,7 +20,7 @@ dotnet add package Obaki.LocalStorageCache
 For more information you can check the [nuget package](https://www.nuget.org/packages/Obaki.LocalStorageCache).
 
 ## Setup
-Register the needed services in your Program.cs file as **Scope**
+Register the needed services in your Program.cs file as **Scoped**
 
 ```c#
 public void ConfigureServices(IServiceCollection services)
@@ -85,8 +84,6 @@ public class TestSync {
   }
 }
 ```
-## What's Next?
-Working to mask the cache data inside the  local storage. Masking != Secure.  
 ## Disclaimer
 Use only this library for caching non sensitive data.
 If you are working with highly private and confidential data , you should not be storing this data in your client's browser.
