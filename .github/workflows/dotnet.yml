@@ -22,6 +22,8 @@ jobs:
       run: dotnet test --configuration Release /p:Version=${VERSION} --no-build
     - name: Pack
       run: dotnet pack --configuration Release /p:Version=${VERSION} --no-build --output .
-    - name: Push
+    - name: Push Gihub Package
       run: dotnet nuget push Obaki.LocalStorageCache.${VERSION}.nupkg --source https://nuget.pkg.github.com/obaki102/index.json --api-key ${{secrets.ACCESS_TOKEN}}
+    - name: Push Nuget Package
+      run: dotnet nuget push Obaki.LocalStorageCache.${VERSION}.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{secrets.NUGET_API_KEY}}
     
