@@ -10,7 +10,7 @@ namespace Obaki.LocalStorageCache
 
         public LocalStorageCacheServiceAsync(ILocalStorageService localStorageService)
         {
-            _localStorageService = localStorageService;
+            _localStorageService = localStorageService ?? throw new ArgumentNullException(nameof(localStorageService));
         }
 
         public TimeSpan CacheExpiration
@@ -46,7 +46,7 @@ namespace Obaki.LocalStorageCache
                 throw new ArgumentNullException(nameof(key));
 
             if (data is null)
-                throw new ArgumentNullException(nameof(T));
+                throw new ArgumentNullException(nameof(data));
 
             var cacheData = new CacheData<T>(data);
 
