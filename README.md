@@ -92,3 +92,14 @@ Use only this library for caching non sensitive data.
 If you are working with highly private and confidential data , you should not be storing this data in your client's browser.
 # License
 MIT License
+## Star History
+
+<a href="https://star-history.com/#obaki102/Obaki.LocalStorageCache&Date">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=obaki102/Obaki.LocalStorageCache&type=Date&theme=dark" />
+    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=obaki102/Obaki.LocalStorageCache&type=Date" />
+    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=obaki102/Obaki.LocalStorageCache&type=Date" />
+  </picture>
+</a>
+
+
